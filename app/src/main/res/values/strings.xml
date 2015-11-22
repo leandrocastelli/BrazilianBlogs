@@ -4,8 +4,16 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuracoes</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_category_title">Blogs</string>
+    <string name="str_blog04_jacarebanguela">Jacare Banguela</string>
+    <string name="str_blog02_kibeloco">Kibe Loco</string>
+    <string name="str_blog01_naosalvo">Nao Salvo</string>
+    <string name="str_blog03_naointendo">Nao Intendo</string>
+    <string name="str_blog05_ahnegao">Ah Negao</string>
+    <string name="str_blog06_leninja">Le Ninja</string>
+    <string name="str_blog07_testosterona">Testosterona</string>
 </resources>

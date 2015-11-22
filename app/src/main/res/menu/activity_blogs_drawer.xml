@@ -4,25 +4,29 @@
 
     <group android:checkableBehavior="single"
         >
-        <item android:id="@+id/nav_nao_salvo" android:icon="@android:drawable/ic_menu_camera"
-        android:title="Nao Salvo" android:checked="true" />
-        <item android:id="@+id/nav_jacare_banguela" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Jacare Banguela"
-            />
-        <item android:id="@+id/nav_kibe_loco" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Kibe Loco" />
-        <item android:id="@+id/nav_nao_intendo" android:icon="@android:drawable/ic_menu_manage"
-            android:title="Nao Intendo" />
-
+        <item android:id="@+id/nav_01_naosalvo"
+            android:title="@string/str_blog01_naosalvo" android:checked="true"/>
+        <item android:id="@+id/nav_02_kibeloco"
+            android:title="@string/str_blog02_kibeloco" />
+        <item android:id="@+id/nav_03_naointendo"
+            android:title="@string/str_blog03_naointendo" />
+        <item android:id="@+id/nav_04_jacarebanguela"
+            android:title="@string/str_blog04_jacarebanguela" />
+        <item android:id="@+id/nav_05_ahnegao"
+            android:title="@string/str_blog05_ahnegao" />
+        <item android:id="@+id/nav_06_leninja"
+            android:title="@string/str_blog06_leninja" />
+        <!-- no logo
+        <item android:id="@+id/nav_07_testosterona"
+            android:title="@string/str_blog07_testosterona" />
+        -->
     </group>
 
-    <item android:title="Communicate"
+    <item android:title="@string/action_settings"
         >
         <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
-                android:title="Share" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
-                android:title="Send" />
+            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_preferences"
+                android:title="@string/action_settings" />
         </menu>
     </item>
 

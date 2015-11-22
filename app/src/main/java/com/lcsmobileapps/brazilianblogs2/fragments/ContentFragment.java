@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.lcsmobileapps.brazilianblogs2.R;
 import com.lcsmobileapps.brazilianblogs2.adapter.PostAdapter;
+import com.lcsmobileapps.brazilianblogs2.util.Utils;
 
 
 public class ContentFragment extends Fragment {
@@ -32,6 +33,7 @@ public class ContentFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, index);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -44,6 +46,7 @@ public class ContentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_PARAM1);
+            mainImage = Utils.FIRST_BACKGROUND + index;
 
         }
     }
@@ -51,13 +54,15 @@ public class ContentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_blogs,container);
+        View view = inflater.inflate(R.layout.fragment_content,container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new PostAdapter());
+
+        mCallback.onFragmentAttached(mainImage);
         return view;
     }
 
@@ -69,6 +74,18 @@ public class ContentFragment extends Fragment {
         super.onAttach(context);
         try {
             mCallback =(FragmentCallback)context;
+            mCallback.onFragmentAttached(mainImage);
+        }catch (ClassCastException ex) {
+            throw new ClassCastException("This Activity must Implement FragmentCallback");
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallback =(FragmentCallback)activity;
+
         }catch (ClassCastException ex) {
             throw new ClassCastException("This Activity must Implement FragmentCallback");
         }

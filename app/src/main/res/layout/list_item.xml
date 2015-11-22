@@ -2,33 +2,58 @@
 <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
-    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
     card_view:cardCornerRadius="4dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardBackgroundColor="@color/cardview_light_background">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:clickable="true"
         android:background="?android:attr/selectableItemBackground">
 
-        <ImageView
-            android:id="@+id/radio_icon"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@android:drawable/sym_def_app_icon"
-            />
-
         <TextView
-            android:id="@+id/sound_name"
-            android:text="Mock Test"
+            android:id="@+id/post_title"
+            android:text="Mock Title"
+            android:padding="8dp"
+            android:layout_alignParentTop="true"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:maxLines="3"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_share"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"/>
+
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/nature_example"
+            android:layout_below="@id/post_title"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             />
 
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/post_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_image"
+            android:text="This is not an notice. This is just a test to see how large and text can be in this situation"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:padding="8dp"/>
+
+    </RelativeLayout>
 </android.support.v7.widget.CardView>
