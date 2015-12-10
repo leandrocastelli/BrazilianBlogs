@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Atualizacao">
+        <CheckBoxPreference android:title="Atualizacao Automatica"
+            android:checked="false"
+            android:key="auto_refresh"
+            />
+        <ListPreference android:title="Periodo"
+            android:key="refresh_period"
+            android:entries="@array/refresh_items"
+            android:entryValues="@array/refresh_values"
+            android:defaultValue="0"
+            android:enabled="false"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

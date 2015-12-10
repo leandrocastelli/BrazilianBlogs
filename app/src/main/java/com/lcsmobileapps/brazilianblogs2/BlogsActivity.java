@@ -112,6 +112,14 @@ public class BlogsActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+        //Change to Settings
+        if (item.getItemId() == R.id.nav_settings) {
+            Controller.getInstance().switchToSettings(R.id.fragment_holder);
+            return true;
+        }
+
+        //Uses the Menu Number to check which is the next Blog
         int id = item .getItemId() - Utils.FIRST_MENU;
 
 
