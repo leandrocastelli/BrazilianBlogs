@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by Leandro on 12/15/2015.
@@ -29,6 +30,8 @@ public class StubSyncService extends Service{
 
     @Override
     public void onCreate() {
+
+        Log.i("Leandro", "Service Authenticator created");
         mAuthenticator = new Authenticator(this);
     }
 

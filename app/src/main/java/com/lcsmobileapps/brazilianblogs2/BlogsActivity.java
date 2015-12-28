@@ -1,5 +1,6 @@
 package com.lcsmobileapps.brazilianblogs2;
 
+import android.accounts.Account;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 
 import com.lcsmobileapps.brazilianblogs2.controller.Controller;
 import com.lcsmobileapps.brazilianblogs2.fragments.ContentFragment;
+import com.lcsmobileapps.brazilianblogs2.provider.PostProvider;
 import com.lcsmobileapps.brazilianblogs2.util.ImageHelper;
 import com.lcsmobileapps.brazilianblogs2.util.Utils;
 
@@ -32,6 +34,7 @@ public class BlogsActivity extends AppCompatActivity
 
     NavigationView navigationView;
     ImageView blogImage;
+    Account mAcount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,11 @@ public class BlogsActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        initialize();
+        Controller.getInstance().blogChange(R.id.fragment_holder, 0);
+    }
 
+    private void initialize() {
         //Config cache and Images
         final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
 
@@ -73,9 +80,11 @@ public class BlogsActivity extends AppCompatActivity
 
         //Initialize Controller
         Controller.getInstance().initialize(this);
-        Controller.getInstance().blogChange(R.id.fragment_holder, 0);
-    }
+        mAcount = Utils.createAccount(this);
 
+        getContentResolver().addPeriodicSync(mAcount, PostProvider.AUTHORITY, Bundle.EMPTY, 60L*60L*24L);
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

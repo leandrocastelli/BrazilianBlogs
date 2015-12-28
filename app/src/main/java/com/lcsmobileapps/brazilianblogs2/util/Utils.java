@@ -33,9 +33,9 @@ public class Utils {
              * here.
              */
 
-            return newAccount;
+
         }
-        return null;
+        return newAccount;
     }
 
 }

@@ -11,10 +11,10 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
-        android:name="com.example.gcm.permission.C2D_MESSAGE"
+        android:name="com.lcsmobileapps.brazilianblogs2.gcm.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.lcsmobileapps.brazilianblogs2.gcm.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -40,7 +40,7 @@
             android:name=".provider.PostProvider"
             android:authorities="com.lcsmobileapps.brazilianblogs2.provider"
             android:exported="false"
-            android:syncable="true"></provider>
+            android:syncable="true"/>
 
         <!-- Fake Authenticator Service -->
         <service android:name=".sync.account.StubSyncService">

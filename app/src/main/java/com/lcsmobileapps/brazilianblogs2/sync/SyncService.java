@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by Leandro on 12/14/2015.
@@ -20,6 +21,7 @@ public class SyncService extends Service {
         super.onCreate();
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null)
+                Log.i("Leandro", "Service Authenticator created");
                 sSyncAdapter = new SyncAdapter(getApplicationContext(), true);
         }
 

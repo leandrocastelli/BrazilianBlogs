@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.lcsmobileapps.brazilianblogs2.R;
 import com.lcsmobileapps.brazilianblogs2.adapter.PostAdapter;
+import com.lcsmobileapps.brazilianblogs2.provider.PostProvider;
 import com.lcsmobileapps.brazilianblogs2.util.Utils;
 
 
@@ -63,6 +64,7 @@ public class ContentFragment extends Fragment {
         recyclerView.setAdapter(new PostAdapter());
 
         mCallback.onFragmentAttached(mainImage);
+
         return view;
     }
 

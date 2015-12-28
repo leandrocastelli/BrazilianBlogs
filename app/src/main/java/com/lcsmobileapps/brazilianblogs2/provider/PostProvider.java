@@ -21,7 +21,7 @@ public class PostProvider extends ContentProvider {
     private static UriMatcher uriMatcher;
 
 
-    private static final String AUTHORITY = "com.lcsmobileapps.brazillianblogs2.provider";
+    public static final String AUTHORITY = "com.lcsmobileapps.brazilianblogs2.provider";
     private static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.lcsmobileapps.providers." + PostContract.TABLE_NAME;
     private static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/vnd.com.lcsmobileapps.providers." + PostContract.TABLE_NAME;
     protected static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PostContract.TABLE_NAME);
