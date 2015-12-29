@@ -15,18 +15,19 @@ import com.lcsmobileapps.brazilianblogs2.sync.net.NetDownloader;
  * Created by Leandro on 12/15/2015.
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
-
+    Context context;
     ContentResolver mContentResolver;
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         Log.i("Leandro", "SyncAdapter created");
         mContentResolver = context.getContentResolver();
+        this.context = context;
     }
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Log.i("Leandro", "Im syncing at " + System.currentTimeMillis());
-        Thread syncThread = new Thread(new NetDownloader(mContentResolver));
+        Thread syncThread = new Thread(new NetDownloader(mContentResolver,context));
         syncThread.start();
 
     }

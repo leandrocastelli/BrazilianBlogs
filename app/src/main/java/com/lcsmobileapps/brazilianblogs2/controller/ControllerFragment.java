@@ -10,14 +10,14 @@ import com.lcsmobileapps.brazilianblogs2.fragments.ContentFragment;
 /**
  * Created by Leandro on 11/9/2015.
  */
-public class Controller {
-    private static Controller ourInstance = new Controller();
+public class ControllerFragment {
+    private static ControllerFragment ourInstance = new ControllerFragment();
 
-    public static Controller getInstance() {
+    public static ControllerFragment getInstance() {
         return ourInstance;
     }
 
-    private Controller() {
+    private ControllerFragment() {
     }
 
     private FragmentManager fragmentManager;
@@ -35,7 +35,7 @@ public class Controller {
 
     public void switchToSettings(int layout) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-    //    transaction.replace(layout, SettingsFragment.newInstance());
+        //    transaction.replace(layout, SettingsFragment.newInstance());
         transaction.addToBackStack("Settings");
         transaction.commit();
     }

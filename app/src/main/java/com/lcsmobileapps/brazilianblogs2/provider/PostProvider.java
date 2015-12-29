@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
-import com.lcsmobileapps.brazilianblogs2.R;
-
 /**
  * Created by Leandro on 12/10/2015.
  */
@@ -24,7 +22,7 @@ public class PostProvider extends ContentProvider {
     public static final String AUTHORITY = "com.lcsmobileapps.brazilianblogs2.provider";
     private static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.lcsmobileapps.providers." + PostContract.TABLE_NAME;
     private static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/vnd.com.lcsmobileapps.providers." + PostContract.TABLE_NAME;
-    protected static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PostContract.TABLE_NAME);
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PostContract.TABLE_NAME);
 
 
     private static final int ALL_POSTS = 0;
@@ -110,7 +108,7 @@ public class PostProvider extends ContentProvider {
         String CREATE_TABLE =
                 "CREATE TABLE IF NOT EXISTS " + PostContract.TABLE_NAME + " ( "
                         + PostContract._ID + " INTEGER PRIMARY KEY , "
-                        + PostContract.NAME+ " TEXT NOT NULL, "
+                        + PostContract.TITLE + " TEXT NOT NULL, "
                         + PostContract.DESCRIPTION + " TEXT NOT NULL, "
                         + PostContract.LINK + " TEXT NOT NULL UNIQUE, "
                         + PostContract.IMAGE + " TEXT NOT NULL UNIQUE, "
@@ -126,8 +124,8 @@ public class PostProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            SQLiteDatabase db = getWritableDatabase();
-            db.execSQL(CREATE_TABLE);
+
+            sqLiteDatabase.execSQL(CREATE_TABLE);
         }
 
 

@@ -1,5 +1,9 @@
 package com.lcsmobileapps.brazilianblogs2.model;
 
+import android.content.ContentValues;
+
+import com.lcsmobileapps.brazilianblogs2.provider.PostContract;
+
 /**
  * Created by ckilee on 29/11/15.
  */
@@ -10,6 +14,15 @@ public class Post {
     String imagePath;
     String blogName;
     String postUrl;
+
+    public Post(String id, String title, String description, String imagePath, String blogName, String postUrl) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.imagePath = imagePath;
+        this.blogName = blogName;
+        this.postUrl = postUrl;
+    }
 
     public String getId() {
         return id;
@@ -61,6 +74,17 @@ public class Post {
 
     public String toString(){
         return "Title:"+getTitle()+" Get Description:"+getDescription()+" Get Image Path:"+getImagePath()+" get Blog Name:"+getBlogName()+" get Post URL:"+getPostUrl();
+    }
+
+    public ContentValues toContentValues() {
+        ContentValues current = new ContentValues();
+        current.put(PostContract._ID, id);
+        current.put(PostContract.TITLE, title);
+        current.put(PostContract.DESCRIPTION, description);
+        current.put(PostContract.IMAGE, imagePath);
+        current.put(PostContract.LINK, postUrl);
+        current.put(PostContract.BLOG, blogName);
+        return  current;
     }
 
 }

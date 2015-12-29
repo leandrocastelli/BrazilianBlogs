@@ -2,11 +2,13 @@ package com.lcsmobileapps.brazilianblogs2.sync.net;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.lcsmobileapps.brazilianblogs2.controller.ControllerData;
 import com.lcsmobileapps.brazilianblogs2.model.Post;
 
 import java.io.BufferedReader;
@@ -24,6 +26,7 @@ import java.util.List;
  */
 public class NetDownloader implements Runnable{
     ContentResolver mProvider;
+    Context context;
     @Override
     public void run() {
         String postJson = "";
@@ -33,11 +36,13 @@ public class NetDownloader implements Runnable{
         }.getType();
         List<Post> postList = gson.fromJson(postJson, listTypePost);
 
-       // mProvider.applyBatch(p)
+        ControllerData.getInstance().insertPosts(postList, context);
 
     }
-    public NetDownloader(ContentResolver provider) {
+    public NetDownloader(ContentResolver provider, Context context) {
+
         this.mProvider = provider;
+        this.context = context;
     }
     private String getJson(String urlString){
 

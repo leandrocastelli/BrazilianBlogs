@@ -7,10 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.util.LruCache;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,10 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.lcsmobileapps.brazilianblogs2.controller.Controller;
+import com.lcsmobileapps.brazilianblogs2.controller.ControllerFragment;
 import com.lcsmobileapps.brazilianblogs2.fragments.ContentFragment;
 import com.lcsmobileapps.brazilianblogs2.provider.PostProvider;
 import com.lcsmobileapps.brazilianblogs2.util.ImageHelper;
@@ -35,6 +30,7 @@ public class BlogsActivity extends AppCompatActivity
     NavigationView navigationView;
     ImageView blogImage;
     Account mAcount;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +38,8 @@ public class BlogsActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,7 +51,7 @@ public class BlogsActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initialize();
-        Controller.getInstance().blogChange(R.id.fragment_holder, 0);
+        ControllerFragment.getInstance().blogChange(R.id.fragment_holder, 0);
     }
 
     private void initialize() {
@@ -79,10 +69,21 @@ public class BlogsActivity extends AppCompatActivity
         ImageHelper.mMemoryCache = new LruCache<String, Bitmap>(cacheSize);
 
         //Initialize Controller
-        Controller.getInstance().initialize(this);
+        ControllerFragment.getInstance().initialize(this);
         mAcount = Utils.createAccount(this);
 
-        getContentResolver().addPeriodicSync(mAcount, PostProvider.AUTHORITY, Bundle.EMPTY, 60L*60L*24L);
+        getContentResolver().setIsSyncable(mAcount, PostProvider.AUTHORITY, 1);
+        getContentResolver().setSyncAutomatically(mAcount, PostProvider.AUTHORITY, true);
+        getContentResolver().addPeriodicSync(mAcount, PostProvider.AUTHORITY, Bundle.EMPTY, 15L);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                getContentResolver().requestSync(mAcount, PostProvider.AUTHORITY, Bundle.EMPTY);
+            }
+        });
 
     }
     @Override
@@ -124,7 +125,7 @@ public class BlogsActivity extends AppCompatActivity
 
         //Change to Settings
         if (item.getItemId() == R.id.nav_settings) {
-            Controller.getInstance().switchToSettings(R.id.fragment_holder);
+            ControllerFragment.getInstance().switchToSettings(R.id.fragment_holder);
             return true;
         }
 
@@ -132,7 +133,7 @@ public class BlogsActivity extends AppCompatActivity
         int id = item .getItemId() - Utils.FIRST_MENU;
 
 
-        Controller.getInstance().blogChange(R.id.fragment_holder, id);
+        ControllerFragment.getInstance().blogChange(R.id.fragment_holder, id);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

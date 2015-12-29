@@ -61,7 +61,10 @@ public class ContentFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
 
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new PostAdapter());
+
+        String jsonTitle =  getResources().getStringArray(R.array.blogs_json)[index];
+
+        recyclerView.setAdapter(new PostAdapter(jsonTitle, getActivity()));
 
         mCallback.onFragmentAttached(mainImage);
 

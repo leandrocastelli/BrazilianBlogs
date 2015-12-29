@@ -9,7 +9,7 @@ public class PostContract implements BaseColumns{
 
     protected static final String DB = "posts.db";
     public static final String TABLE_NAME = "Posts";
-    public static final String NAME = "Name";
+    public static final String TITLE = "Title";
     public static final String DESCRIPTION = "Description";
     public static final String IMAGE = "Image";
     public static final String LINK = "Link";
