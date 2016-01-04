@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.lcsmobileapps.brazilianblogs2.controller.ControllerData;
 import com.lcsmobileapps.brazilianblogs2.controller.ControllerFragment;
 import com.lcsmobileapps.brazilianblogs2.controller.ControllerVolley;
 import com.lcsmobileapps.brazilianblogs2.fragments.ContentFragment;
@@ -46,13 +47,16 @@ public class BlogsActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
-        drawer.openDrawer(GravityCompat.START);
+       // drawer.openDrawer(GravityCompat.START);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initialize();
-        ControllerFragment.getInstance().blogChange(R.id.fragment_holder, 0);
+        int selectedItem = Utils.getPreferenceInt(Utils.CURRENT_FRAGMENT_INDEX, this);
+        navigationView.setCheckedItem(selectedItem);
+        ControllerFragment.getInstance().blogChange(R.id.fragment_holder, selectedItem);
+
     }
 
     private void initialize() {
@@ -69,7 +73,11 @@ public class BlogsActivity extends AppCompatActivity
 
         getContentResolver().setIsSyncable(mAcount, PostProvider.AUTHORITY, 1);
         getContentResolver().setSyncAutomatically(mAcount, PostProvider.AUTHORITY, true);
-        getContentResolver().addPeriodicSync(mAcount, PostProvider.AUTHORITY, Bundle.EMPTY, 15L);
+        if (ControllerData.getInstance().isEmpty(this)) {
+            getContentResolver().requestSync(mAcount, PostProvider.AUTHORITY, Bundle.EMPTY);
+        }
+        //Sync twice a day
+        getContentResolver().addPeriodicSync(mAcount, PostProvider.AUTHORITY, Bundle.EMPTY, 43200L);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +135,7 @@ public class BlogsActivity extends AppCompatActivity
         //Uses the Menu Number to check which is the next Blog
         int id = item .getItemId() - Utils.FIRST_MENU;
 
-
+        Utils.setPreferenceInt(Utils.CURRENT_FRAGMENT_INDEX, id, this);
         ControllerFragment.getInstance().blogChange(R.id.fragment_holder, id);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -137,7 +145,7 @@ public class BlogsActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        ControllerVolley.getInstance().cancelRequests(Utils.IMAGE_DOWNLOAD_TAG);
+        ControllerVolley.getInstance().getRequestQueue().stop();
     }
 
     @Override

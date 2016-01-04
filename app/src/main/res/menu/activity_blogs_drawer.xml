@@ -16,10 +16,10 @@
             android:title="@string/str_blog05_ahnegao" />
         <item android:id="@+id/nav_06_leninja"
             android:title="@string/str_blog06_leninja" />
-        <!-- no logo
-        <item android:id="@+id/nav_07_testosterona"
-            android:title="@string/str_blog07_testosterona" />
-        -->
+
+        <item android:id="@+id/nav_07_capinaremos"
+            android:title="@string/str_blog07_capinaremos" />
+
     </group>
 
     <item android:title="@string/action_settings"

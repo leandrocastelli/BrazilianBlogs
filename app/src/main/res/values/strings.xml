@@ -15,7 +15,7 @@
     <string name="str_blog03_naointendo">Nao Intendo</string>
     <string name="str_blog05_ahnegao">Ah Negao</string>
     <string name="str_blog06_leninja">Le Ninja</string>
-    <string name="str_blog07_testosterona">Testosterona</string>
+    <string name="str_blog07_capinaremos">Capinaremos</string>
 
     <string-array name="blogs_json">
         <item name="naosalvo">naosalvo</item>
@@ -24,7 +24,7 @@
         <item name="jacarebanguela">jacarebanguela</item>
         <item name="ahnegao">ahnegao</item>
         <item name="leninja">leninja</item>
-        <item name="testosterona">testosterona</item>
+        <item name="capinaremos">capinaremos</item>
     </string-array>
     <string-array name="refresh_items">
         <item name="half_hour">30 min.</item>

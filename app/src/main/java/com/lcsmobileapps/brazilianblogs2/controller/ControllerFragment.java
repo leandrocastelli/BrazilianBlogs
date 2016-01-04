@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
 import com.lcsmobileapps.brazilianblogs2.fragments.ContentFragment;
+import com.lcsmobileapps.brazilianblogs2.util.Utils;
 
 
 /**

@@ -26,10 +26,7 @@ public class ControllerVolley {
     }
 
     public void initialize(Context context) {
-        Cache cache = new DiskBasedCache(context.getCacheDir(), 1024*1024*20);
-        Network network = new BasicNetwork(new HurlStack());
-      //  requestQueue = new RequestQueue(cache, network);
-        requestQueue = Volley.newRequestQueue(context, 1024*1024*20);
+        requestQueue = Volley.newRequestQueue(context, 1024*1024*200);
         int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
         imageCache = new BitmapMemoryCache(maxMemory / 8);
         imageLoader = new ImageLoader(requestQueue, imageCache);

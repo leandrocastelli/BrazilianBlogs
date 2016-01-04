@@ -62,4 +62,12 @@ public class ControllerData {
 
     }
 
+    public boolean isEmpty(Context ctx) {
+        ContentResolver contentResolver = ctx.getContentResolver();
+        Cursor result = contentResolver.query(PostProvider.CONTENT_URI,
+                new String[]{PostContract._ID},
+                null ,null, PostContract._ID + " limit 1");
+        return !(result.getCount() > 0);
+    }
+
 }

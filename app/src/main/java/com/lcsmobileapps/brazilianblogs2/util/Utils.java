@@ -3,6 +3,8 @@ package com.lcsmobileapps.brazilianblogs2.util;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.lcsmobileapps.brazilianblogs2.R;
 import com.lcsmobileapps.brazilianblogs2.sync.account.StubSyncService;
@@ -14,6 +16,9 @@ public class Utils {
     public final static int FIRST_BACKGROUND = R.drawable.background_01_nao_salvo;
     public final static int FIRST_MENU = R.id.nav_01_naosalvo;
     public final static String IMAGE_DOWNLOAD_TAG = "ImageDownloadTag";
+
+    //Preferences
+    public final static String CURRENT_FRAGMENT_INDEX = "LastFragment";
 
     public static Account createAccount(Context context) {
         Account newAccount = new Account(
@@ -37,6 +42,17 @@ public class Utils {
 
         }
         return newAccount;
+    }
+
+    public static void setPreferenceInt(String preference, int value, Context context) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(preference, value);
+        editor.commit();
+
+    }
+    public static int getPreferenceInt(String preference, Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getInt(preference,0);
     }
 
 }
