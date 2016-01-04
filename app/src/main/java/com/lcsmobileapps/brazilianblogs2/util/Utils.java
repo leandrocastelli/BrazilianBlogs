@@ -13,6 +13,7 @@ import com.lcsmobileapps.brazilianblogs2.sync.account.StubSyncService;
 public class Utils {
     public final static int FIRST_BACKGROUND = R.drawable.background_01_nao_salvo;
     public final static int FIRST_MENU = R.id.nav_01_naosalvo;
+    public final static String IMAGE_DOWNLOAD_TAG = "ImageDownloadTag";
 
     public static Account createAccount(Context context) {
         Account newAccount = new Account(

@@ -15,7 +15,7 @@ public class Post {
     String blogName;
     String postUrl;
 
-    public Post(String id, String title, String description, String imagePath, String blogName, String postUrl) {
+    public Post(String id, String title, String description, String imagePath, String postUrl, String blogName) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -82,8 +82,8 @@ public class Post {
         current.put(PostContract.TITLE, title);
         current.put(PostContract.DESCRIPTION, description);
         current.put(PostContract.IMAGE, imagePath);
-        current.put(PostContract.LINK, postUrl);
         current.put(PostContract.BLOG, blogName);
+        current.put(PostContract.LINK, postUrl);
         return  current;
     }
 

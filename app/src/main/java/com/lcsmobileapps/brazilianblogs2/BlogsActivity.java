@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.lcsmobileapps.brazilianblogs2.controller.ControllerFragment;
+import com.lcsmobileapps.brazilianblogs2.controller.ControllerVolley;
 import com.lcsmobileapps.brazilianblogs2.fragments.ContentFragment;
 import com.lcsmobileapps.brazilianblogs2.provider.PostProvider;
 import com.lcsmobileapps.brazilianblogs2.util.ImageHelper;
@@ -55,21 +56,15 @@ public class BlogsActivity extends AppCompatActivity
     }
 
     private void initialize() {
-        //Config cache and Images
-        final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
 
-        int cacheSize;
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            cacheSize = maxMemory / 8;
-        }
-        else {
-            cacheSize = maxMemory / 4;
-        }
         blogImage = (ImageView) findViewById(R.id.backdrop);
-        ImageHelper.mMemoryCache = new LruCache<String, Bitmap>(cacheSize);
 
-        //Initialize Controller
+
+        //Initialize Controllers
         ControllerFragment.getInstance().initialize(this);
+        ControllerVolley.getInstance().initialize(getApplicationContext());
+
+        ImageHelper.mMemoryCache = (LruCache<String, Bitmap>) ControllerVolley.getInstance().getImageCache();
         mAcount = Utils.createAccount(this);
 
         getContentResolver().setIsSyncable(mAcount, PostProvider.AUTHORITY, 1);
@@ -137,6 +132,12 @@ public class BlogsActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ControllerVolley.getInstance().cancelRequests(Utils.IMAGE_DOWNLOAD_TAG);
     }
 
     @Override
