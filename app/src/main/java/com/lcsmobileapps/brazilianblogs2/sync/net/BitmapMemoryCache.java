@@ -1,7 +1,9 @@
 package com.lcsmobileapps.brazilianblogs2.sync.net;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
+import android.util.DisplayMetrics;
 
 import com.android.volley.toolbox.ImageLoader;
 
@@ -9,13 +11,9 @@ import com.android.volley.toolbox.ImageLoader;
  * Created by Leandro on 1/3/2016.
  */
 public class BitmapMemoryCache extends LruCache<String,Bitmap> implements ImageLoader.ImageCache {
-    /**
-     * @param maxSize for caches that do not override {@link #sizeOf}, this is
-     *                the maximum number of entries in the cache. For all other caches,
-     *                this is the maximum sum of the sizes of the entries in this cache.
-     */
-    public BitmapMemoryCache(int maxSize) {
-        super(maxSize);
+
+    public BitmapMemoryCache(Context context) {
+        super(getCacheSize(context));
     }
 
     @Override
@@ -31,5 +29,15 @@ public class BitmapMemoryCache extends LruCache<String,Bitmap> implements ImageL
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
         put(url,bitmap);
+    }
+    public static int getCacheSize(Context ctx) {
+        final DisplayMetrics displayMetrics = ctx.getResources().
+                getDisplayMetrics();
+        final int screenWidth = displayMetrics.widthPixels;
+        final int screenHeight = displayMetrics.heightPixels;
+        // 4 bytes per pixel
+        final int screenBytes = screenWidth * screenHeight * 4;
+
+        return screenBytes * 3;
     }
 }

@@ -35,7 +35,7 @@
             android:background="@android:color/transparent"
             android:layout_alignParentRight="true"/>
 
-        <com.android.volley.toolbox.NetworkImageView
+        <com.lcsmobileapps.brazilianblogs2.util.CustomNetworkImageView
             android:id="@+id/post_image"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

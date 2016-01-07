@@ -2,6 +2,8 @@ package com.lcsmobileapps.brazilianblogs2.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +13,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
+import com.android.volley.Response;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.lcsmobileapps.brazilianblogs2.R;
 import com.lcsmobileapps.brazilianblogs2.controller.ControllerData;
 import com.lcsmobileapps.brazilianblogs2.controller.ControllerVolley;
 import com.lcsmobileapps.brazilianblogs2.model.Post;
+import com.lcsmobileapps.brazilianblogs2.util.CustomNetworkImageView;
 
 import java.util.List;
 
@@ -76,9 +82,19 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
         });
 
-        NetworkImageView imgView = (NetworkImageView)holder.itemView.findViewById(R.id.post_image);
+        CustomNetworkImageView imgView = (CustomNetworkImageView)holder.itemView.findViewById(R.id.post_image);
        // imgView.setImageUrl(current.getImagePath(), ControllerVolley.getInstance().getImageLoader());
-        imgView.setImageUrl(current.getImagePath(), ControllerVolley.getInstance().getImageLoader());
+        Cache.Entry entry = ControllerVolley.getInstance().getDiskCache().get("0:"+current.getImagePath());
+        if (entry != null) {
+            byte[] dataBitmap = entry.data;
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            imgView.setImageBitmap(BitmapFactory.decodeByteArray(dataBitmap, 0, dataBitmap.length, options));
+        } else {
+            imgView.setImageUrl(current.getImagePath(), ControllerVolley.getInstance().getImageLoader());
+        }
+
+
     }
 
     @Override
