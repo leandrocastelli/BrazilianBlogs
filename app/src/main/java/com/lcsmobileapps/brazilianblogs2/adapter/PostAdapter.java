@@ -10,11 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
 import com.android.volley.Response;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.lcsmobileapps.brazilianblogs2.R;
@@ -32,12 +34,15 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private String blog;
     private Context context;
     private List<Post> mDataSet;
+    private int lastLoaded = 0;
+
 
     public PostAdapter(String blog, Context context) {
         this.blog = blog;
         this.context = context;
 
         mDataSet = ControllerData.getInstance().getPosts(blog, context);
+        loadMoreImages();
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
@@ -48,11 +53,25 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_networking,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
         RecyclerView.ViewHolder vh = new MyHolder(v);
         return vh;
     }
 
+    public void loadMoreImages() {
+        if (mDataSet.size() <= 0 || lastLoaded == mDataSet.size()) {
+            return;
+        }
+
+        int offset;
+        if (mDataSet.size() < lastLoaded + 10) {
+            offset = mDataSet.size();
+        } else {
+            offset = lastLoaded + 10;
+        }
+        ControllerVolley.getInstance().loadSetImages(mDataSet.subList(lastLoaded,offset));
+        lastLoaded = offset;
+    }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         TextView postTitle = (TextView)holder.itemView.findViewById(R.id.post_title);
@@ -82,19 +101,17 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
         });
 
-        CustomNetworkImageView imgView = (CustomNetworkImageView)holder.itemView.findViewById(R.id.post_image);
-       // imgView.setImageUrl(current.getImagePath(), ControllerVolley.getInstance().getImageLoader());
-        Cache.Entry entry = ControllerVolley.getInstance().getDiskCache().get("0:"+current.getImagePath());
-        if (entry != null) {
-            byte[] dataBitmap = entry.data;
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            imgView.setImageBitmap(BitmapFactory.decodeByteArray(dataBitmap, 0, dataBitmap.length, options));
+        ImageView imgView = (ImageView)holder.itemView.findViewById(R.id.post_image);
+
+        Bitmap bitmap = ControllerVolley.getInstance().getImageCache().getBitmap(current.getPostUrl());
+        if (bitmap == null) {
+            ControllerVolley.getInstance().loadSingleImage(current.getPostUrl(), imgView);
         } else {
-            imgView.setImageUrl(current.getImagePath(), ControllerVolley.getInstance().getImageLoader());
+            imgView.setImageBitmap(ControllerVolley.getInstance().getImageCache().getBitmap(current.getPostUrl()));
         }
-
-
+        if (lastLoaded - position < 3) {
+            loadMoreImages();
+        }
     }
 
     @Override
